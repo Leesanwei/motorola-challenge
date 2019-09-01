@@ -19,7 +19,6 @@ class Location
   has n, :radios, :through => Resource
 end
 
-
 DataMapper.finalize
 
 DataMapper.auto_upgrade!

@@ -14,12 +14,13 @@ describe 'Sinatra App' do
     expect(last_response.body).to eq("Hello Motorola Solutions")
   end
 
-  it "creates a radio" do
+  it "creates a radio with 2 locations" do
     h = {'Content-Type' => 'application/json'}
     body = { "alias": "Radio1", "allowed_locations": ["CPH-1", "CPH-2"] }.to_json
     post '/radios/1', body, h
 
     expect(last_response.status).to eq 200
+    expect(Radio.get(1).locations.count).to eq(2)
   end
 
   it "return 403 FORBIDDEN if location is not in allowed locations" do

@@ -1,7 +1,7 @@
 version: "3.6"
 services:
   api:
-    image: motolra-app:latest
+    image: motorola-app:latest
     networks:
       - public
     ports:

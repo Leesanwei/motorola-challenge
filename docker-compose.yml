@@ -1,0 +1,16 @@
+version: "3.6"
+services:
+  api:
+    image: motolra-app:latest
+    networks:
+      - public
+    ports:
+      - 4567:4567
+    volumes:
+      - ./db:/var/local/api-db
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+networks:
+  public:

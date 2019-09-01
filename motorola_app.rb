@@ -22,23 +22,16 @@ class MotorolaApp < Sinatra::Base
 
   post '/radios/:id/location' do
     radio = Radio.get(params[:id])
-    halt 403 unless radio
     location = Location.get(@payload["location"])
+    halt 403 unless radio && (radio.locations.include? location) 
 
-    if radio.locations.include? location 
-      radio.update(:location => @payload["location"])
-      [200, "Radio #{radio.id} location has been set to #{radio.location}"]
-    else
-      [403, "FORBIDDEN "]
-    end
+    radio.update(:location => @payload["location"])
+    [200, "Radio #{radio.id} location has been set to #{radio.location}"]
   end
 
   get '/radios/:id/location' do
     radio = Radio.get(params[:id])
-    if radio.location
-        [200, { location: radio.location }.to_json]
-    else
-        [404, "NOT FOUND"]
-    end
+    halt 404 unless radio && radio.location
+    [200, { location: radio.location }.to_json]
   end
 end
